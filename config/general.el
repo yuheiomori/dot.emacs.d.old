@@ -1,8 +1,8 @@
 ;(setq debug-on-error t)
 
 (set-language-environment  'Japanese)
-;(prefer-coding-system 'utf-8)
-;(set-default-coding-systems 'utf-8-unix)
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8-unix)
 
 (global-hl-line-mode nil)
 (show-paren-mode 1)
