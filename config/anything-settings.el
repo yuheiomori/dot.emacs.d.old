@@ -131,3 +131,14 @@
               anything-c-source-info-python-tut-ja
               anything-c-source-info-python-dist-ja)
             (thing-at-point 'symbol) nil nil nil "*anything info*"))
+
+
+(require 'anything-complete)
+;; ;; Automatically collect symbols by 150 secs
+(anything-lisp-complete-symbol-set-timer 150)
+(define-key emacs-lisp-mode-map "\C-\M-i" 'anything-lisp-complete-symbol-partial-match)
+(define-key lisp-interaction-mode-map "\C-\M-i" 'anything-lisp-complete-symbol-partial-match)
+;; replace completion commands with `anything'
+(anything-read-string-mode 1)
+;; Bind C-o to complete shell history
+(anything-complete-shell-history-setup-key "\C-o")
