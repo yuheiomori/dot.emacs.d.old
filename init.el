@@ -92,22 +92,23 @@
 (add-hook 'ruby-mode-hook 'hs-minor-mode)
 
 
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+(add-to-list 'ac-sources 'ac-source-yasnippet)
+(ac-config-default)
 
-(require 'auto-complete)
 
-(require 'summarye)
-(define-key help-map "M" 'se/make-summary-buffer)
 
 (require 'moccur-edit)
 
 (require 'color-theme-zenburn)
 (color-theme-zenburn)
 
-
 ;; yasnippet
 (setq yas/root-directory "~/.emacs.d/snippets")
 (add-hook 'python-mode-hook 'yas/minor-mode-on)
 (add-hook 'js2-mode-hook  'yas/minor-mode-on)
+(yas/reload-all)
 
 ;; js2
 (autoload 'js2-mode "js2-mode" nil t)
