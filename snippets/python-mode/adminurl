@@ -1,0 +1,6 @@
+# -*- coding: utf-8 -*-
+# name: adminurl
+# --
+(r'^/${1:path}/$', ${2:ModelName}IndexHandler),
+(r'^/$1/create/$', $2CreateHandler),
+(r'^/$1/edit/([a-zA-Z0-9-_]+)/$', $2EditHandler),

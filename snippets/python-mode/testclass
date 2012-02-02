@@ -1,0 +1,34 @@
+# -*- coding: utf-8 -*-
+# name: testclass
+# expand-env: ((yas/indent-line 'fixed) (yas/wrap-around-region 'nil))
+# --
+class ${1:ApiName}APITest(unittests.TestBedTestCase):
+    """$0
+    """
+
+    def setUp(self):
+        super($1APITest, self).setUp()
+        # User
+        self.u1 = auth_api.create_user('test1')
+        self.u1.sid = 'test1_sid'
+        self.u1.put()
+
+    def test_user_not_found(self):
+        """sidが一致するユーザーがいない場合はUserNotFound"""
+        self.assertRaises(api_exceptions.UserNotFound,
+                          ${2:package}_api.$1,
+                          "not_exist")
+
+
+    def test_ok(self):
+        pass
+
+
+class $1HandlerTest(unittests.HandlerTestCase):
+    """
+    """
+
+    handler_class = $2_handlers.$1Handler
+
+    def setUp(self):
+        super($1HandlerTest, self).setUp()

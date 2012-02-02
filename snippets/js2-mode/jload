@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: jload
+# --
+(function($) {
+     $0
+})(jQuery);

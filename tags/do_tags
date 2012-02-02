@@ -1,0 +1,48 @@
+#!/bin/bash
+# Originally written at: http://code.google.com/p/python-etags/
+# You may need to augment your PYTHONPATH before this works.
+#
+# For example, for my locally checked out libraries:
+# $ PYTHONPATH=/home/tbielawa/rhat/nushus/src/nushus_client
+# $ PYTHONPATH=$PYTHONPATH:/home/tbielawa/rhat/nushus/src/nushus
+# $ export PYTHONPATH
+# $ do_tags
+#
+# I put this in my .emacs.d/tags/ folder. 
+# It still needs work. Because it gens tags for ALL libraries
+# BUT -- It doesn't combine it into one singular searchable tags file :(
+#
+# Oh well, it's a start!!!
+#
+# Use completion with:
+#    M-.
+# Or:   M-x <RET> complete-symbol
+# Or:   M-x <RET> complete-tag
+#
+# Please help me finish this!!
+#
+# One last note, You may need to change the etags.emacs call to something on your system
+# Same goes for the md5sum command's output hacking (I had to AWK it)
+#
+# Enjoy!
+
+cd `dirname $0`
+TAGSDIR=`pwd`
+rm -f $TAGSDIR/*.tags
+rm -f $TAGSDIR/TAGS
+
+for ENTRY in `python -c 'import sys; print " ".join(sys.path)'` ; do
+    if [ -d $ENTRY ] ; then
+        cd $ENTRY
+        TAGFILE=$TAGSDIR/`pwd | md5 | awk '{print $1}'`.tags
+        if [ -f $TAGFILE ] ; then
+            echo "Skipping duplicate $ENTRY (aka `pwd`)"
+        else
+            echo "$ENTRY --> $TAGFILE"
+            find $ENTRY -type f | /usr/bin/etags --output $TAGFILE -
+        fi
+    fi
+done
+
+cat $TAGSDIR/*.tags > $TAGSDIR/TAGS
+rm -f $TAGSDIR/*.tags

@@ -1,0 +1,21 @@
+# -*- coding: utf-8 -*-
+# name: admin
+# expand-env: ((yas/indent-line 'fixed) (yas/wrap-around-region 'nil))
+# --
+# ${1:ModelName}
+class $1IndexHandler(admin_base.ModelIndexHandler):
+    def get_model(self):
+        from apps.${2:package}.models import $1
+        return $1
+
+
+class $1CreateHandler(admin_base.ModelCreateHandler):
+    def get_model(self):
+        from apps.$2.models import $1
+        return $1
+
+
+class $1EditHandler(admin_base.ModelEditHandler):
+    def get_model(self):
+        from apps.$2.models import $1
+        return $1

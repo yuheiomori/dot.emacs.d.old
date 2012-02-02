@@ -1,0 +1,24 @@
+# -*- coding: utf-8 -*-
+# name: testclass
+# expand-env: ((yas/indent-line 'fixed) (yas/wrap-around-region 'nil))
+# --
+class ${1:ApiName}APITest(unittests.TestBedTestCase):
+    """$0
+    """
+
+    def setUp(self):
+        super($1APITest, self).setUp()
+        pass
+
+    def test_ok(self):
+        pass
+
+
+class $1HandlerTest(unittests.HandlerTestCase):
+    """
+    """
+
+    handler_class = timeline_handlers.$1Handler
+
+    def setUp(self):
+        super($1HandlerTest, self).setUp()
