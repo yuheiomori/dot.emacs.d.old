@@ -22,9 +22,6 @@
    (setenv "PATH" (concat dir ":" (getenv "PATH")))
    (setq exec-path (append (list dir) exec-path))))
 
-
-
-
 ;; auto-install
 (require 'auto-install)
 (setq auto-install-directory "~/.emacs.d/vendor/auto-install/")
@@ -54,7 +51,6 @@
  '(monky-hg-process-environment (quote ("TERM=dumb" "HGPLAIN=" "LANGUAGE=C" "HGENCODING=utf-8")))
  '(safe-local-variable-values (quote ((b . 2) (a . 1))))
  '(uniquify-buffer-name-style (quote post-forward-angle-brackets) nil (uniquify))
- '(yas/global-mode t nil (yasnippet))
  '(yas/prompt-functions (quote (yas/dropdown-prompt yas/completing-prompt yas/ido-prompt yas/no-prompt))))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
@@ -86,17 +82,35 @@
 (global-set-key (kbd "M-e") 'flymake-goto-next-error)
 (global-set-key (kbd "M-E") 'flymake-goto-prev-error)
 
-(add-hook 'python-mode-hook 'hs-minor-mode)
 
+(add-hook 'python-mode-hook 'hs-minor-mode)
 ;;; ruby
 (add-hook 'ruby-mode-hook 'hs-minor-mode)
 
 
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
-(add-to-list 'ac-sources 'ac-source-yasnippet)
 (ac-config-default)
 
+(defun my-ac-emacs-lisp-mode ()
+  (setq ac-sources '(ac-source-symbols ac-source-words-in-same-mode-buffers)))
+(add-hook 'emacs-lisp-mode-hook 'my-ac-emacs-lisp-mode)
+
+(defun my-ac-ruby-mode ()
+  (setq ac-sources '(ac-source-words-in-same-mode-buffers ac-source-yasnippet)))
+(add-hook 'ruby-mode-hook 'my-ac-ruby-mode)
+(add-hook 'ruby-mode-hook
+          (lambda ()
+            (make-local-variable 'ac-ignores)
+            (add-to-list 'ac-ignores "end")))
+
+(defun my-ac-python-mode ()
+  (setq ac-sources '(ac-source-words-in-same-mode-buffers ac-source-yasnippet)))
+(add-hook 'python-mode-hook 'my-ac-python-mode)
+
+(defun my-ac-css-mode ()
+  (setq ac-sources '(ac-source-words-in-same-mode-buffers ac-source-css-property ac-source-yasnippet)))
+(add-hook 'css-mode-hook 'my-ac-css-mode)
 
 
 (require 'moccur-edit)
@@ -106,8 +120,8 @@
 
 ;; yasnippet
 (setq yas/root-directory "~/.emacs.d/snippets")
-(add-hook 'python-mode-hook 'yas/minor-mode-on)
-(add-hook 'js2-mode-hook  'yas/minor-mode-on)
+(yas/load-directory yas/root-directory)
+(yas/global-mode)
 (yas/reload-all)
 
 ;; js2
@@ -130,9 +144,6 @@
 (shell)
 
 (require 'uniquify)
-;(require 'textmate)
-;(textmate-mode)
-
 
 (require 'haml-mode)
 (require 'flymake-haml)
